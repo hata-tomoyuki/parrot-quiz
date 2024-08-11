@@ -58,4 +58,18 @@ const generateQuizData = () => {
     return shuffleArray(quizData); // クイズデータをシャッフル
 }
 
-export const quizData = generateQuizData();
+const ranks = [
+    "おうむお手上げ",
+    "おうむ大迷子",
+    "おうむ迷子",
+    "おうむ素人",
+    "おうむ見習い",
+    "おうむビギナー",
+    "おうむファン",
+    "おうむ愛好家",
+    "おうむ教授",
+    "おうむ博士",
+    "おうむマスター",
+]
+
+export { generateQuizData, ranks };
