@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { QuizContent } from './QuizContent'
 import { generateQuizData, ranks } from '../const/data'
 
@@ -19,12 +19,13 @@ import kokuban from '../assets/images/background/bunbougu_kokuban.png'
 import teacher from '../assets/images/background/teacher.png'
 import parrot from '../assets/images/background/parrot.png';
 import { extractTextFromUrl } from '../utils/util';
+import useTextToSpeech from '../hooks/useTextToSpeech';
 
 export const MainContent = ({ setImage, setParrotsMessage1, setParrotsMessage2, setParrotsMessage3, setParrotsMessage4 }) => {
     const [quizData, setQuizData] = useState([]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [selectedOption, setSelectedOption] = useState(null);
-    const [correctCount, setCorrectCount] = useState(0); // 正解数を管理するステート
+    const [correctCount, setCorrectCount] = useState(0);
 
     const [correctSoundPlay] = useSound(correctSound);
     const [wrongSoundPlay] = useSound(wrongSound);
@@ -43,6 +44,11 @@ export const MainContent = ({ setImage, setParrotsMessage1, setParrotsMessage2, 
     const [isHidden, setIsHidden] = useState(true)
     const [rankIsHidden, setRankIsHidden] = useState(true)
 
+    const [audioUrl, setAudioUrl] = useState('');
+
+    const audioRef = useRef(new Audio());
+    const { handleTextToSpeech } = useTextToSpeech();
+
 
     useEffect(() => {
         setQuizData(generateQuizData());
@@ -50,6 +56,9 @@ export const MainContent = ({ setImage, setParrotsMessage1, setParrotsMessage2, 
 
     const currentQuestion = quizData[currentQuestionIndex];
 
+    /**
+     * クイズが終了したときのハンドラー
+     */
     useEffect(() => {
         if (currentQuestionIndex >= 10) {
             setFeedbackMessage("クイズ終了です。正解数はこちらです。");
@@ -58,6 +67,9 @@ export const MainContent = ({ setImage, setParrotsMessage1, setParrotsMessage2, 
             setTimeout(() => {
                 setRankIsHidden(false)
             }, 3000)
+            setTimeout(() => {
+                handleTextToSpeech(`あなたの称号は、、、${ranks[correctCount]}です。`);
+            }, 6500);
         }
     }, [currentQuestionIndex, finishSoundPlay]);
 
@@ -66,12 +78,13 @@ export const MainContent = ({ setImage, setParrotsMessage1, setParrotsMessage2, 
      * @param {string} option - 選択されたオプション
      */
     const handleOptionClick = (option) => {
+        audioRef.current.pause();
         setSelectedOption(option);
         const isCorrect = extractTextFromUrl(option) === currentQuestion.answer;
         setFeedbackMessage(isCorrect ? "正解です。" : "違います。");
         setButtonDisabled(true);
         if (isCorrect) {
-            setCorrectCount(prevCount => prevCount + 1); // 正解数を増やす
+            setCorrectCount(prevCount => prevCount + 1);
             correctSoundPlay();
             setTimeout(() => {
                 setImage(correctGif);
@@ -92,6 +105,11 @@ export const MainContent = ({ setImage, setParrotsMessage1, setParrotsMessage2, 
                 }
             }, 1500);
         }
+        setTimeout(() => {
+            if (currentQuestionIndex < 9) {
+                handleTextToSpeech(quizData[currentQuestionIndex + 1].question);
+            }
+        }, 3200);
         setTimeout(() => {
             setSelectedOption(null);
             setFeedbackMessage("");
@@ -137,12 +155,16 @@ export const MainContent = ({ setImage, setParrotsMessage1, setParrotsMessage2, 
 
         }, 5000);
         setTimeout(() => {
+            handleTextToSpeech(currentQuestion.question);
+        }, 6500);
+        setTimeout(() => {
             setIsHidden(false);
             firstSoundPlay();
             setParrotsMessage1("");
             setParrotsMessage2("");
             setParrotsMessage3("");
             setParrotsMessage4("");
+            setAudioUrl("")
         }, 7000);
     }
 
@@ -156,7 +178,7 @@ export const MainContent = ({ setImage, setParrotsMessage1, setParrotsMessage2, 
             <button className={`absolute top-40 left-1/2 transform -translate-x-1/2  w-[90%] text-white text-6xl font-bold ${gameStarted ? "hidden" : ""}`} onClick={handleStartButtonClick}>START</button>
             <div className="absolute top-16 left-1/2 transform -translate-x-1/2 w-[90%]">
                 {gameFinished ? (
-                    <div className="text-white text-6xl font-bold leading-relaxed mt-[-5%]">正解数: {correctCount} / 10<br /><p className={rankIsHidden ? "hidden" : ""}>あなたのランクは<br /><strong className='font-bold text-yellow-300'>{ranks[correctCount]}</strong></p></div>
+                    <div className="text-white text-6xl font-bold leading-relaxed mt-[-5%]">正解数: {correctCount} / 10<br /><p className={rankIsHidden ? "hidden" : ""}>あなたの称号は<br /><strong className='font-bold text-yellow-300'>{ranks[correctCount]}</strong></p></div>
                 ) : (
                     <QuizContent
                         currentQuestion={currentQuestion}

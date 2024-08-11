@@ -72,4 +72,4 @@ const ranks = [
     "おうむマスター",
 ]
 
-export { generateQuizData, ranks };
+export { generateQuizData, ranks, images };
