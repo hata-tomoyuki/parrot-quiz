@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Quiz } from './Quiz'
+import { QuizContent } from './QuizContent'
 import { quizData } from '../const/data'
 
 import useSound from 'use-sound';
@@ -18,27 +18,20 @@ import correctGif from '../assets/images/background/ultrafastparrot.gif';
 import kokuban from '../assets/images/background/bunbougu_kokuban.png'
 import teacher from '../assets/images/background/teacher.png'
 import parrot from '../assets/images/background/parrot.png';
-
-const extractTextFromUrl = (url) => {
-    const path = typeof url === 'string' ? url : url.default;
-    const match = path.match(/\/([^\/]+)\.[^\/]+\.gif$/);
-    return match ? match[1] : null;
-};
-
+import { extractTextFromUrl } from '../utils/util';
 
 export const MainContent = ({ setImage, setParrotsMessage1, setParrotsMessage2, setParrotsMessage3, setParrotsMessage4 }) => {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [selectedOption, setSelectedOption] = useState(null);
 
-    const [correctSoundPlay, { correctSoundStop, correctSoundPause }] = useSound(correctSound);
-    const [wrongSoundPlay, { wrongSoundStop, wrongSoundPause }] = useSound(wrongSound);
-    const [ahSoundPlay, { ahSoundStop, ahSoundPause }] = useSound(ahSound);
-    const [yeahSoundPlay, { yeahSoundStop, yeahSoundPause }] = useSound(yeahSound);
-    const [firstSoundPlay, { firstSoundStop, firstSoundPause }] = useSound(firstSound);
-    const [nextSoundPlay, { nextSoundStop, nextSoundPause }] = useSound(nextSound);
-
-    const [introSoundPlay, { introSoundStop, introSoundPause }] = useSound(introSound);
-    const [okSoundPlay, { okSoundStop, okSoundPause }] = useSound(okSound);
+    const [correctSoundPlay] = useSound(correctSound);
+    const [wrongSoundPlay] = useSound(wrongSound);
+    const [ahSoundPlay] = useSound(ahSound);
+    const [yeahSoundPlay] = useSound(yeahSound);
+    const [firstSoundPlay] = useSound(firstSound);
+    const [nextSoundPlay] = useSound(nextSound);
+    const [introSoundPlay] = useSound(introSound);
+    const [okSoundPlay] = useSound(okSound);
 
     const [buttonDisabled, setButtonDisabled] = useState(false);
     const [gameStarted, setGameStarted] = useState(false);
@@ -48,7 +41,10 @@ export const MainContent = ({ setImage, setParrotsMessage1, setParrotsMessage2, 
 
     const currentQuestion = quizData[currentQuestionIndex];
 
-
+    /**
+     * 選択肢がクリックされたときのハンドラー
+     * @param {string} option - 選択されたオプション
+     */
     const handleOptionClick = (option) => {
         setSelectedOption(option);
         const isCorrect = extractTextFromUrl(option) === currentQuestion.answer;
@@ -85,10 +81,9 @@ export const MainContent = ({ setImage, setParrotsMessage1, setParrotsMessage2, 
         }, 3500);
     };
 
-    if (!currentQuestion) {
-        return <div>クイズデータが読み込まれていません。</div>;
-    }
-
+    /**
+     * スタートボタンがクリックされたときのハンドラー
+     */
     const handleStartButtonClick = () => {
         setGameStarted(true);
         setFeedbackMessage("今日は様々な Party Parrot について学びましょう。");
@@ -128,13 +123,16 @@ export const MainContent = ({ setImage, setParrotsMessage1, setParrotsMessage2, 
         }, 7000);
     }
 
+    if (!currentQuestion) {
+        return <div>クイズデータが読み込まれていません。</div>;
+    }
+
     return (
         <div className="relative ">
-            <h1 className="text-5xl font-bold absolute top-16 left-1/2 transform -translate-x-1/2 w-full text-center text-white">目指せ！◯◯◯◯マスター</h1>
             <img src={kokuban} alt="Parrot" />
-            <button className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[90%] text-white text-6xl font-bold ${gameStarted ? "hidden" : ""}`} onClick={handleStartButtonClick}>START</button>
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[90%]">
-                <Quiz
+            <button className={`absolute top-40 left-1/2 transform -translate-x-1/2  w-[90%] text-white text-6xl font-bold ${gameStarted ? "hidden" : ""}`} onClick={handleStartButtonClick}>START</button>
+            <div className="absolute top-16 left-1/2 transform -translate-x-1/2 w-[90%]">
+                <QuizContent
                     currentQuestion={currentQuestion}
                     selectedOption={selectedOption}
                     handleOptionClick={handleOptionClick}

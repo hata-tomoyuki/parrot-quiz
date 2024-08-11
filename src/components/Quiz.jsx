@@ -1,26 +1,20 @@
-export const Quiz = ({ currentQuestion, selectedOption, handleOptionClick, buttonDisabled, isHidden }) => {
-    if (!currentQuestion) {
-        return <div>クイズデータが読み込まれていません。</div>;
-    }
+import React, { useState } from "react";
+import parrot from '../assets/images/background/parrot.png'
+import { MainContent } from "./MainContent";
+import { Gallary } from "./Gallary";
 
-    return (
-        <div className={`quiz text-center ${isHidden ? "hidden" : ""}`}>
-            <h2 className="text-3xl font-bold mb-4 text-white">{currentQuestion.question}</h2>
-            <div className="options">
-                {currentQuestion.options.map((option, index) => {
-                    return (
-                        <button
-                            key={index}
-                            onClick={() => handleOptionClick(option)}
-                            disabled={selectedOption !== null}
-                            className={`w-36 h-36 bg-gray-200 mx-2 border-2 border-gray-400 rounded-md hover:bg-red-300 ${option === selectedOption ? "selected" : ""} ${buttonDisabled ? "disabled" : ""}`}
-
-                        >
-                            <img src={option.default} alt="Option" className="w-full h-full block object-cover" />
-                        </button>
-                    );
-                })}
-            </div>
-        </div>
-    );
+export const Quiz = () => {
+  const [image, setImage] = useState(parrot)
+  const [parrotsMessage1, setParrotsMessage1] = useState("");
+  const [parrotsMessage2, setParrotsMessage2] = useState("");
+  const [parrotsMessage3, setParrotsMessage3] = useState("");
+  const [parrotsMessage4, setParrotsMessage4] = useState("");
+  return (
+    <div className="flex flex-col items-center">
+      <MainContent setImage={setImage} setParrotsMessage1={setParrotsMessage1} setParrotsMessage2={setParrotsMessage2} setParrotsMessage3={setParrotsMessage3} setParrotsMessage4={setParrotsMessage4} />
+      <Gallary image={image} parrotsMessage1={parrotsMessage1} parrotsMessage2={parrotsMessage2} parrotsMessage3={parrotsMessage3} parrotsMessage4={parrotsMessage4} />
+    </div>
+  );
 };
+
+
