@@ -1,0 +1,18 @@
+const { override, addWebpackModuleRule } = require('customize-cra');
+
+module.exports = override(
+    addWebpackModuleRule({
+        test: /\.(gif|jpe?g|tiff|png|webp|bmp)$/,
+        use: [
+            {
+                loader: 'url-loader',
+                options: {
+                    limit: 8192, // 8KB以下の画像はインライン化
+                    fallback: 'file-loader',
+                    name: '[name].[hash].[ext]',
+                    outputPath: 'images/',
+                },
+            },
+        ],
+    })
+);
