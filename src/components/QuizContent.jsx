@@ -1,10 +1,11 @@
-export const QuizContent = ({ currentQuestion, selectedOption, handleOptionClick, buttonDisabled, isHidden, questionText }) => {
+export const QuizContent = ({ currentQuestion, selectedOption, handleOptionClick, buttonDisabled, isHidden, questionText, timer }) => {
     if (!currentQuestion) {
         return <div>クイズデータが読み込まれていません。</div>;
     }
 
     return (
-        <div className="quiz text-center" >
+        <div className="quiz text-center">
+            <span className={`text-white text-3xl font-bold mb-4 ${isHidden ? "hidden" : ""}`}>{timer}</span>
             <h2 className="text-3xl font-bold mb-4 text-white">{questionText}</h2>
             <div className={`options ${isHidden ? "hidden" : ""}`}>
                 {currentQuestion.options.map((option, index) => {

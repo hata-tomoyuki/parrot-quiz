@@ -59,17 +59,13 @@ const generateQuizData = () => {
 }
 
 const ranks = [
-    "おうむお手上げ",
-    "おうむ大迷子",
-    "おうむ迷子",
-    "おうむ素人",
-    "おうむ見習い",
-    "おうむビギナー",
-    "おうむファン",
-    "おうむ愛好家",
-    "おうむ教授",
-    "おうむ博士",
-    "おうむマスター",
+    { display: "素人", system: "シロウト" },
+    { display: "おうむ検定４級", system: "オウムケンテイヨンキュウ" },
+    { display: "おうむ検定３級", system: "オウムケンテイサンキュウ" },
+    { display: "おうむ検定２級", system: "オウムケンテイニキュウ" },
+    { display: "おうむ検定準１級", system: "オウムケンテイジュンイッキュウ" },
+    { display: "おうむ検定１級", system: "オウムケンテイイッキュウ" },
+    { display: "おうむマスター", system: "オウムマスター" },
 ]
 
 export { generateQuizData, ranks, images };
