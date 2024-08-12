@@ -133,11 +133,8 @@ export const MainContent = ({ setImage, setParrotsMessage1, setParrotsMessage2, 
         setFeedbackMessage("今日は様々な Party Parrot について学びましょう。");
         introSoundPlay();
         setTimeout(() => {
-            for (let i = 0; i < 4; i++) {
-                setTimeout(() => {
-                    okSoundPlay();
-                }, i * 350);
-            }
+            okSoundPlay();
+
             setFeedbackMessage("");
 
             setTimeout(() => {
