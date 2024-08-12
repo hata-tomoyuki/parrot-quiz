@@ -13,11 +13,11 @@ function App() {
 					<Link to="/" className="text-2xl hover:text-gray-500">
 						ホーム
 					</Link>
-					<Link to="/about" className="text-2xl hover:text-gray-500">
-						オウム図鑑
-					</Link>
 					<Link to="/quiz" className="text-2xl hover:text-gray-500">
 						オウムクイズ
+					</Link>
+					<Link to="/about" className="text-2xl hover:text-gray-500">
+						オウム図鑑
 					</Link>
 				</header>
 				<Routes>

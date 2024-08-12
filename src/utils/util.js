@@ -34,3 +34,20 @@ export const base64ToBlob = (base64Data, contentType) => {
 	const blob = new Blob(byteArrays, { type: contentType });
 	return blob;
 };
+
+/**
+ * 画像のパスからファイル名（拡張子を除く）を抽出する関数
+ * @param {string} path - 画像のパス
+ * @returns {string|null} - ファイル名（拡張子を除く）またはnull
+ */
+export const getImageName = (path) => {
+	if (typeof path !== "string") {
+		throw new TypeError("path must be a string");
+	}
+	const match = path.match(/\/([^\/]+)\.[^\/]+$/);
+	if (match) {
+		// 不要な文字列を削除
+		return match[1].replace(/\.[0-9a-f]{32}$/, "");
+	}
+	return null;
+};
