@@ -4,9 +4,9 @@
  * @returns {string|null} - 抽出されたテキスト
  */
 export const extractTextFromUrl = (url) => {
-    const path = typeof url === 'string' ? url : url.default;
-    const match = path.match(/\/([^\/]+)\.[^\/]+\.gif$/);
-    return match ? match[1] : null;
+	const path = typeof url === "string" ? url : url.default;
+	const match = path.match(/\/([^\/]+)\.[^\/]+\.gif$/);
+	return match ? match[1] : null;
 };
 
 /**
@@ -16,23 +16,21 @@ export const extractTextFromUrl = (url) => {
  * @returns {Blob} - Blob
  */
 export const base64ToBlob = (base64Data, contentType) => {
-    const byteCharacters = atob(base64Data);
-    const byteArrays = [];
+	const byteCharacters = atob(base64Data);
+	const byteArrays = [];
 
-    for (let offset = 0; offset < byteCharacters.length; offset += 512) {
-        const slice = byteCharacters.slice(offset, offset + 512);
+	for (let offset = 0; offset < byteCharacters.length; offset += 512) {
+		const slice = byteCharacters.slice(offset, offset + 512);
 
-        const byteNumbers = new Array(slice.length);
-        for (let i = 0; i < slice.length; i++) {
-            byteNumbers[i] = slice.charCodeAt(i);
-        }
+		const byteNumbers = new Array(slice.length);
+		for (let i = 0; i < slice.length; i++) {
+			byteNumbers[i] = slice.charCodeAt(i);
+		}
 
-        const byteArray = new Uint8Array(byteNumbers);
-        byteArrays.push(byteArray);
-    }
+		const byteArray = new Uint8Array(byteNumbers);
+		byteArrays.push(byteArray);
+	}
 
-    const blob = new Blob(byteArrays, { type: contentType });
-    return blob;
-}
-
-
+	const blob = new Blob(byteArrays, { type: contentType });
+	return blob;
+};
