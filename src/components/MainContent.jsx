@@ -2,19 +2,6 @@ import React, { useEffect, useRef, useState } from 'react'
 import { QuizContent } from './QuizContent'
 import { generateQuizData, ranks } from '../const/data'
 
-import useSound from 'use-sound';
-import correctSound from '../assets/sounds/correct.mp3';
-import wrongSound from '../assets/sounds/wrong.mp3';
-import ahSound from '../assets/sounds/ah.mp3';
-import yeahSound from '../assets/sounds/yeah.mp3';
-import firstSound from '../assets/sounds/first.mp3';
-import nextSound from '../assets/sounds/next.mp3';
-import introSound from '../assets/sounds/intro.mp3'
-import okSound from '../assets/sounds/ok.mp3'
-import finishSound from '../assets/sounds/finish.mp3'
-import timeUpSound from '../assets/sounds/timeup.mp3'
-import haSound from '../assets/sounds/ha.mp3'
-
 import wrongGif from '../assets/images/background/60fpsparrot.gif';
 import correctGif from '../assets/images/background/ultrafastparrot.gif';
 import timeUpGif from '../assets/images/background/darkmodeparrot.gif';
@@ -23,38 +10,46 @@ import teacher from '../assets/images/background/teacher.png'
 import parrot from '../assets/images/background/parrot.png';
 import { extractTextFromUrl } from '../utils/util';
 import useTextToSpeech from '../hooks/useTextToSpeech';
+import useQuizSounds from '../hooks/useQuizSounds';
+import useRank from '../hooks/useRank';
 
 export const MainContent = ({ setImage, setParrotsMessage1, setParrotsMessage2, setParrotsMessage3, setParrotsMessage4 }) => {
     const [quizData, setQuizData] = useState([]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [selectedOption, setSelectedOption] = useState(null);
     const [correctCount, setCorrectCount] = useState(0);
-
-    const [correctSoundPlay] = useSound(correctSound);
-    const [wrongSoundPlay] = useSound(wrongSound);
-    const [ahSoundPlay] = useSound(ahSound);
-    const [yeahSoundPlay] = useSound(yeahSound);
-    const [firstSoundPlay] = useSound(firstSound);
-    const [nextSoundPlay] = useSound(nextSound);
-    const [introSoundPlay] = useSound(introSound);
-    const [okSoundPlay] = useSound(okSound);
-    const [finishSoundPlay] = useSound(finishSound);
-    const [timeUpSoundPlay] = useSound(timeUpSound);
-    const [haSoundPlay] = useSound(haSound);
-
     const [buttonDisabled, setButtonDisabled] = useState(false);
     const [gameStarted, setGameStarted] = useState(false);
     const [gameFinished, setGameFinished] = useState(false);
     const [feedbackMessage, setFeedbackMessage] = useState("");
     const [isHidden, setIsHidden] = useState(true)
     const [rankIsHidden, setRankIsHidden] = useState(true)
-
     const [questionText, setQuestionText] = useState("");
     const [rank, setRank] = useState("");
-
     const [timer, setTimer] = useState(5);
     const intervalIdRef = useRef(null);
+    const audioRef = useRef(new Audio());
 
+    const { handleTextToSpeech, isAudioEnded } = useTextToSpeech();
+    const {
+        correctSoundPlay,
+        wrongSoundPlay,
+        ahSoundPlay,
+        yeahSoundPlay,
+        firstSoundPlay,
+        nextSoundPlay,
+        introSoundPlay,
+        okSoundPlay,
+        finishSoundPlay,
+        timeUpSoundPlay,
+        haSoundPlay,
+    } = useQuizSounds();
+
+    const { getRank } = useRank();
+
+    /**
+     * タイマーのカウントダウンを開始する関数
+     */
     const countDown = () => {
         intervalIdRef.current = setInterval(() => {
             setTimer(prevTimer => {
@@ -68,16 +63,11 @@ export const MainContent = ({ setImage, setParrotsMessage1, setParrotsMessage2, 
         }, 1000);
     }
 
-    const audioRef = useRef(new Audio());
-    const { handleTextToSpeech, isAudioEnded } = useTextToSpeech();
-
-
     useEffect(() => {
         setQuizData(generateQuizData());
     }, []);
 
     const currentQuestion = quizData[currentQuestionIndex];
-
 
     useEffect(() => {
         if (isAudioEnded && currentQuestionIndex < 9) {
@@ -92,21 +82,26 @@ export const MainContent = ({ setImage, setParrotsMessage1, setParrotsMessage2, 
     }, [isHidden]);
 
     /**
-     * クイズが終了したときのハンドラー
+     * クイズを終了する関数
+     * @param {string} message - 終了メッセージ
+     * @param {string} image - 終了時に表示する画像
+     * @param {function} sound - 終了時に再生する音声
+     * @param {object} rank - 終了時のランク
      */
-    // useEffect(() => {
-    //     if (currentQuestionIndex >= 10) {
-    //         setFeedbackMessage("クイズ終了です。正解数はこちらです。");
-    //         finishSoundPlay();
-    //         setGameFinished(true);
-    //         setTimeout(() => {
-    //             setRankIsHidden(false)
-    //         }, 3000)
-    //         setTimeout(() => {
-    //             handleTextToSpeech(`あなたの称号は、、、${ranks[correctCount]}です。`);
-    //         }, 6500);
-    //     }
-    // }, [currentQuestionIndex, finishSoundPlay]);
+    const endQuiz = (message, image, sound, rank) => {
+        setFeedbackMessage(message);
+        setImage(image);
+        sound();
+        setGameFinished(true);
+
+        setTimeout(() => {
+            handleTextToSpeech(`あなたは ${rank.system} です`);
+        }, 6000);
+
+        setTimeout(() => {
+            setRankIsHidden(false);
+        }, 6500);
+    }
 
     /**
      * 選択肢がクリックされたときのハンドラー
@@ -148,47 +143,13 @@ export const MainContent = ({ setImage, setParrotsMessage1, setParrotsMessage2, 
                 ahSoundPlay();
             }, 1500);
 
-            const getRank = (correctCount, totalQuestions) => {
-                const percentage = (correctCount / totalQuestions) * 100;
-                if (correctCount === totalQuestions) {
-                    return ranks.find(rank => rank.display === "おうむマスター");
-                } else if (correctCount <= 10) {
-                    return ranks.find(rank => rank.display === "素人");
-                } else if (percentage >= 90) {
-                    return ranks.find(rank => rank.display === "おうむ検定１級");
-                } else if (percentage >= 80) {
-                    return ranks.find(rank => rank.display === "おうむ検定準１級");
-                } else if (percentage >= 70) {
-                    return ranks.find(rank => rank.display === "おうむ検定２級");
-                } else if (percentage >= 60) {
-                    return ranks.find(rank => rank.display === "おうむ検定３級");
-                } else if (percentage >= 50) {
-                    return ranks.find(rank => rank.display === "おうむ検定４級");
-                } else {
-                    return ranks.find(rank => rank.display === "素人");
-                }
-            }
-
             const rank = getRank(correctCount, quizData.length);
-
             setRank(rank);
 
             setTimeout(() => {
-                setFeedbackMessage("クイズ終了です。正解数はこちらです。");
-                setImage(parrot);
-                finishSoundPlay();
-                setGameFinished(true);
+                endQuiz("クイズ終了です。正解数はこちらです。", parrot, finishSoundPlay, rank);
             }, 4000);
-
-            setTimeout(() => {
-                handleTextToSpeech(`あなたわ ${rank.system} です`);
-            }, 8000);
-
-            setTimeout(() => {
-                setRankIsHidden(false)
-            }, 8500);
         }
-
     };
 
     /**
@@ -233,30 +194,11 @@ export const MainContent = ({ setImage, setParrotsMessage1, setParrotsMessage2, 
         }, 7500);
     }
 
+    /**
+     * 時間切れ時のハンドラー
+     */
     const handleTimeUp = () => {
-        const getRank = (correctCount, totalQuestions) => {
-            const percentage = (correctCount / totalQuestions) * 100;
-            if (correctCount === totalQuestions) {
-                return ranks.find(rank => rank.display === "おうむマスター");
-            } else if (correctCount <= 10) {
-                return ranks.find(rank => rank.display === "素人");
-            } else if (percentage >= 90) {
-                return ranks.find(rank => rank.display === "おうむ検定１級");
-            } else if (percentage >= 80) {
-                return ranks.find(rank => rank.display === "おうむ検定準１級");
-            } else if (percentage >= 70) {
-                return ranks.find(rank => rank.display === "おうむ検定２級");
-            } else if (percentage >= 60) {
-                return ranks.find(rank => rank.display === "おうむ検定３級");
-            } else if (percentage >= 50) {
-                return ranks.find(rank => rank.display === "おうむ検定４級");
-            } else {
-                return ranks.find(rank => rank.display === "素人");
-            }
-        }
-
         const rank = getRank(correctCount, quizData.length);
-
         setRank(rank);
         setFeedbackMessage("時間切れです。");
         timeUpSoundPlay();
@@ -268,19 +210,8 @@ export const MainContent = ({ setImage, setParrotsMessage1, setParrotsMessage2, 
         }, 1000);
 
         setTimeout(() => {
-            setFeedbackMessage("クイズ終了です。正解数はこちらです。");
-            setImage(parrot);
-            finishSoundPlay();
-            setGameFinished(true);
+            endQuiz("クイズ終了です。正解数はこちらです。", parrot, finishSoundPlay, rank);
         }, 3000);
-
-        setTimeout(() => {
-            handleTextToSpeech(`あなたわ ${rank.system} です`);
-        }, 9000);
-
-        setTimeout(() => {
-            setRankIsHidden(false)
-        }, 9500);
     }
 
     if (!currentQuestion) {
