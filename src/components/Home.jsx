@@ -8,7 +8,7 @@ export const Home = () => {
 			<ul className="flex flex-col items-center gap-8 mt-16">
 				<TopLink
 					to="/quiz"
-					title="オウムクイズ"
+					title="オウム検定"
 					description="オウムの種類を確認することができます。"
 				/>
 				<TopLink

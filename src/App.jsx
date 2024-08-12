@@ -14,7 +14,7 @@ function App() {
 						ホーム
 					</Link>
 					<Link to="/quiz" className="text-2xl hover:text-gray-500">
-						オウムクイズ
+						オウム検定
 					</Link>
 					<Link to="/about" className="text-2xl hover:text-gray-500">
 						オウム図鑑

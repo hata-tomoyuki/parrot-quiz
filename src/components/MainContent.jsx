@@ -76,10 +76,10 @@ export const MainContent = ({
 	const currentQuestion = quizData[currentQuestionIndex];
 
 	useEffect(() => {
-		if (isAudioEnded && currentQuestionIndex < 9) {
+		if (isAudioEnded && currentQuestionIndex < quizData.length) {
 			setIsHidden(false); // オーディオ再生終了後にクイズを表示
 		}
-	}, [isAudioEnded, currentQuestionIndex]);
+	}, [isAudioEnded, currentQuestionIndex, quizData.length]);
 
 	useEffect(() => {
 		if (!isHidden) {
@@ -134,12 +134,21 @@ export const MainContent = ({
 				setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
 				setImage(parrot);
 				setButtonDisabled(false);
-				if (currentQuestionIndex < 9) {
+				if (currentQuestionIndex < quizData.length - 1) {
 					nextSoundPlay();
 					setIsHidden(true);
 					setTimer(5);
 					setQuestionText(quizData[currentQuestionIndex + 1].question);
 					handleTextToSpeech(quizData[currentQuestionIndex + 1].question);
+				} else {
+					const rank = getRank(correctCount, quizData.length);
+					setRank(rank);
+					endQuiz(
+						"クイズ終了です。正解数はこちらです。",
+						parrot,
+						finishSoundPlay,
+						rank,
+					);
 				}
 			}, 3500);
 		} else {
