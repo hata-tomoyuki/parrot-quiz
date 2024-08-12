@@ -88,21 +88,13 @@ export const MainContent = ({ setImage, setParrotsMessage1, setParrotsMessage2, 
             correctSoundPlay();
             setTimeout(() => {
                 setImage(correctGif);
-                for (let i = 0; i < 5; i++) {
-                    setTimeout(() => {
-                        yeahSoundPlay();
-                    }, i * 350);
-                }
+                yeahSoundPlay();
             }, 1500);
         } else {
             wrongSoundPlay();
             setTimeout(() => {
                 setImage(wrongGif);
-                for (let i = 0; i < 5; i++) {
-                    setTimeout(() => {
-                        ahSoundPlay();
-                    }, i * 350);
-                }
+                ahSoundPlay();
             }, 1500);
         }
         setTimeout(() => {
