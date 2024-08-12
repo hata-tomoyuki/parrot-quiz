@@ -1,12 +1,27 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { base64ToBlob } from '../utils/util';
 
 
 const useTextToSpeech = () => {
     const [audioUrl, setAudioUrl] = useState('');
     const audioRef = useRef(new Audio());
+    const [isAudioEnded, setIsAudioEnded] = useState(false); // 再生終了を管理するステート
+
+    useEffect(() => {
+        const audio = audioRef.current;
+        const handleEnded = () => {
+            setIsAudioEnded(true);
+        };
+
+        audio.addEventListener('ended', handleEnded);
+
+        return () => {
+            audio.removeEventListener('ended', handleEnded);
+        };
+    }, []);
 
     const handleTextToSpeech = async (text) => {
+        setIsAudioEnded(false); // 再生開始時にリセット
         const apiKey = process.env.REACT_APP_API_KEY;
         const response = await fetch(`https://texttospeech.googleapis.com/v1/text:synthesize?key=${apiKey}`, {
             method: 'POST',
@@ -40,7 +55,7 @@ const useTextToSpeech = () => {
         }
     };
 
-    return { audioUrl, handleTextToSpeech };
+    return { audioUrl, handleTextToSpeech, isAudioEnded };
 };
 
 export default useTextToSpeech;

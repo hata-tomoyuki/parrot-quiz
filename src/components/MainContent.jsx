@@ -44,10 +44,12 @@ export const MainContent = ({ setImage, setParrotsMessage1, setParrotsMessage2, 
     const [isHidden, setIsHidden] = useState(true)
     const [rankIsHidden, setRankIsHidden] = useState(true)
 
+    const [questionText, setQuestionText] = useState("");
+
     const [audioUrl, setAudioUrl] = useState('');
 
     const audioRef = useRef(new Audio());
-    const { handleTextToSpeech } = useTextToSpeech();
+    const { handleTextToSpeech, isAudioEnded } = useTextToSpeech();
 
 
     useEffect(() => {
@@ -55,6 +57,13 @@ export const MainContent = ({ setImage, setParrotsMessage1, setParrotsMessage2, 
     }, []);
 
     const currentQuestion = quizData[currentQuestionIndex];
+
+
+    useEffect(() => {
+        if (isAudioEnded && currentQuestionIndex < 9) {
+            setIsHidden(false); // オーディオ再生終了後にクイズを表示
+        }
+    }, [isAudioEnded, currentQuestionIndex]);
 
     /**
      * クイズが終了したときのハンドラー
@@ -99,6 +108,7 @@ export const MainContent = ({ setImage, setParrotsMessage1, setParrotsMessage2, 
         }
         setTimeout(() => {
             if (currentQuestionIndex < 9) {
+                setQuestionText(quizData[currentQuestionIndex + 1].question);
                 handleTextToSpeech(quizData[currentQuestionIndex + 1].question);
             }
         }, 3200);
@@ -110,6 +120,7 @@ export const MainContent = ({ setImage, setParrotsMessage1, setParrotsMessage2, 
             setButtonDisabled(false);
             if (currentQuestionIndex < 9) {
                 nextSoundPlay();
+                setIsHidden(true);
             }
         }, 3500);
     };
@@ -147,10 +158,10 @@ export const MainContent = ({ setImage, setParrotsMessage1, setParrotsMessage2, 
 
         }, 5000);
         setTimeout(() => {
+            setQuestionText(currentQuestion.question);
             handleTextToSpeech(currentQuestion.question);
         }, 6500);
         setTimeout(() => {
-            setIsHidden(false);
             firstSoundPlay();
             setParrotsMessage1("");
             setParrotsMessage2("");
@@ -178,6 +189,7 @@ export const MainContent = ({ setImage, setParrotsMessage1, setParrotsMessage2, 
                         handleOptionClick={handleOptionClick}
                         buttonDisabled={buttonDisabled}
                         isHidden={isHidden}
+                        questionText={questionText}
                     />
                 )}
             </div>
