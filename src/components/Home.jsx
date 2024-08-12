@@ -9,7 +9,7 @@ export const Home = () => {
 				<TopLink
 					to="/quiz"
 					title="オウム検定"
-					description="オウムの種類を確認することができます。"
+					description="オウム検定に挑戦できます。"
 				/>
 				<TopLink
 					to="/about"
