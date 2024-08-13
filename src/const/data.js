@@ -63,6 +63,7 @@ const generateQuizData = () => {
 };
 
 const ranks = [
+    { display: "論外", system: "ロンガイ" },
     { display: "素人", system: "シロウト" },
     { display: "おうむ検定４級", system: "オウムケンテイヨンキュウ" },
     { display: "おうむ検定３級", system: "オウムケンテイサンキュウ" },
