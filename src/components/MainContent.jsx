@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { generateQuizData, ranks } from "../const/data";
+import { generateQuizData } from "../const/data";
 import { QuizContent } from "./QuizContent";
 
 import wrongGif from "../assets/images/background/60fpsparrot.gif";
@@ -11,7 +11,6 @@ import correctGif from "../assets/images/background/ultrafastparrot.gif";
 import useQuizSounds from "../hooks/useQuizSounds";
 import useRank from "../hooks/useRank";
 import useTextToSpeech from "../hooks/useTextToSpeech";
-import { extractTextFromUrl } from "../utils/util";
 
 export const MainContent = ({
 	setImage,
@@ -116,7 +115,7 @@ export const MainContent = ({
 	const handleOptionClick = (option) => {
 		audioRef.current.pause();
 		setSelectedOption(option);
-		const isCorrect = extractTextFromUrl(option) === currentQuestion.answer;
+		const isCorrect = option.name === currentQuestion.answer;
 		setFeedbackMessage(isCorrect ? "正解です。" : "違います。");
 		setButtonDisabled(true);
 		clearInterval(intervalIdRef.current); // タイマーを止める

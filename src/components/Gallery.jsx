@@ -1,7 +1,7 @@
 import React from "react";
 import { ParrotImage } from "./ParrotImage";
 
-export const Gallary = ({
+export const Gallery = ({
 	image,
 	parrotsMessage1,
 	parrotsMessage2,

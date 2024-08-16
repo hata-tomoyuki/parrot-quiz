@@ -1,4 +1,4 @@
-import quadparrot from "../assets/images/parrot-images/quadparrot.gif";
+import quadparrot from "../assets/images/parrot-images/standard/quadparrot.gif";
 import { TopLink } from "./TopLink";
 
 export const Home = () => {
@@ -12,9 +12,14 @@ export const Home = () => {
 					description="オウム検定に挑戦できます。"
 				/>
 				<TopLink
+					to="/country"
+					title="国旗クイズ"
+					description="世界の国旗について学べます。"
+				/>
+				<TopLink
 					to="/about"
 					title="オウム図鑑"
-					description="オウムの種類を確認することができます。"
+					description="オウムの種類を確認できます。"
 				/>
 			</ul>
 			<img src={quadparrot} alt="quadparrot" className="w-64 mx-auto" />

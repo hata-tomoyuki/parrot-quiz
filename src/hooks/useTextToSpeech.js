@@ -48,7 +48,7 @@ const useTextToSpeech = () => {
 			);
 
 			if (!response.ok) {
-				console.error('APIリクエストに失敗しました:', response.statusText);
+				console.error("APIリクエストに失敗しました:", response.statusText);
 				return;
 			}
 
@@ -66,10 +66,10 @@ const useTextToSpeech = () => {
 				audioRef.current.onended = () => setIsAudioEnded(true);
 				await audioRef.current.play();
 			} else {
-				console.error('音声データが取得できませんでした:', data);
+				console.error("音声データが取得できませんでした:", data);
 			}
 		} catch (error) {
-			console.error('エラーが発生しました:', error);
+			console.error("エラーが発生しました:", error);
 		}
 	};
 

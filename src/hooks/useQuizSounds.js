@@ -1,6 +1,7 @@
 import useSound from "use-sound";
 import ahSound from "../assets/sounds/ah.mp3";
 import correctSound from "../assets/sounds/correct.mp3";
+import countrySound from "../assets/sounds/country.mp3";
 import finishSound from "../assets/sounds/finish.mp3";
 import firstSound from "../assets/sounds/first.mp3";
 import haSound from "../assets/sounds/ha.mp3";
@@ -23,6 +24,7 @@ const useQuizSounds = () => {
 	const [finishSoundPlay] = useSound(finishSound);
 	const [timeUpSoundPlay] = useSound(timeUpSound);
 	const [haSoundPlay] = useSound(haSound);
+	const [countrySoundPlay] = useSound(countrySound);
 
 	return {
 		correctSoundPlay,
@@ -36,6 +38,7 @@ const useQuizSounds = () => {
 		finishSoundPlay,
 		timeUpSoundPlay,
 		haSoundPlay,
+		countrySoundPlay,
 	};
 };
 

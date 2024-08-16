@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import parrot from "../assets/images/background/parrot.png";
-import { Gallary } from "./Gallary";
+import { Gallery } from "./Gallery";
 import { MainContent } from "./MainContent";
 
 export const Quiz = () => {
@@ -18,7 +18,7 @@ export const Quiz = () => {
 				setParrotsMessage3={setParrotsMessage3}
 				setParrotsMessage4={setParrotsMessage4}
 			/>
-			<Gallary
+			<Gallery
 				image={image}
 				parrotsMessage1={parrotsMessage1}
 				parrotsMessage2={parrotsMessage2}

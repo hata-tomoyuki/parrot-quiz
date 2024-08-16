@@ -25,9 +25,8 @@ const useRank = () => {
 		if (percentage >= 6) {
 			return ranks.find((rank) => rank.display === "おうむ検定４級");
 		}
-		else {
-			return ranks.find((rank) => rank.display === "素人");
-		}
+
+		return ranks.find((rank) => rank.display === "素人");
 	};
 
 	return { getRank };
