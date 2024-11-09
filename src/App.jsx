@@ -1,26 +1,26 @@
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import "./App.css";
 
-import { About } from "./components/About";
-import { Country } from "./components/Country";
-import { Home } from "./components/Home";
-import { Quiz } from "./components/Quiz";
+import { About } from "./pages/About";
+import { Country } from "./pages/Country";
+import { Home } from "./pages/Home";
+import { Quiz } from "./pages/Quiz";
 
 function App() {
 	return (
 		<BrowserRouter>
 			<div className="App">
 				<header className="flex justify-center gap-12 py-4">
-					<Link to="/" className="text-2xl hover:text-gray-500">
+					<Link to="/" className="text-2xl">
 						ホーム
 					</Link>
-					<Link to="/quiz" className="text-2xl hover:text-gray-500">
+					<Link to="/quiz" className="text-2xl">
 						オウム検定
 					</Link>
-					<Link to="/country" className="text-2xl hover:text-gray-500">
+					<Link to="/country" className="text-2xl">
 						国旗クイズ
 					</Link>
-					<Link to="/about" className="text-2xl hover:text-gray-500">
+					<Link to="/about" className="text-2xl">
 						オウム図鑑
 					</Link>
 				</header>

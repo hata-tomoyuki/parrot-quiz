@@ -1,5 +1,5 @@
 import quadparrot from "../assets/images/parrot-images/standard/quadparrot.gif";
-import { TopLink } from "./TopLink";
+import { TopLink } from "../components/TopLink";
 
 export const Home = () => {
 	return (

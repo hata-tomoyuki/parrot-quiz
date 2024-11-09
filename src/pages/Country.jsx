@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import parrot from "../assets/images/background/parrot.png";
-import { Gallery } from "./Gallery";
-import { MainContentCountry } from "./MainContentCountry";
+import { Gallery } from "../components/Gallery";
+import { MainContentCountry } from "../components/MainContentCountry";
 
 export const Country = () => {
 	const [image, setImage] = useState(parrot);

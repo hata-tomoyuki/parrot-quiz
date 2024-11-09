@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import parrot from "../assets/images/background/parrot.png";
-import { Gallery } from "./Gallery";
-import { MainContent } from "./MainContent";
+import { Gallery } from "../components/Gallery";
+import { MainContent } from "../components/MainContent";
 
 export const Quiz = () => {
 	const [image, setImage] = useState(parrot);
