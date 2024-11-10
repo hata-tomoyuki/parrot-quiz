@@ -189,7 +189,7 @@ export const Chat = () => {
 							<img
 								src={isRecording ? micIconFilled : micIcon}
 								alt=""
-								className="w-12 h-12 block mx-auto"
+								className="w-12 h-12 block mx-auto pointer-events-none"
 							/>
 						</button>
 					</>
