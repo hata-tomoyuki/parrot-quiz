@@ -43,9 +43,6 @@ export const getImageName = (path) => {
 	return null;
 };
 
-const API_KEY = process.env.REACT_APP_OPENAI_API_KEY;
-const URL = process.env.REACT_APP_OPENAI_ENDPOINT;
-
 /**
  * 環境変数から取得したAPIキーとエンドポイントを使用して、
  * 指定されたメッセージをOpenAI APIに送信します。
@@ -58,10 +55,9 @@ const URL = process.env.REACT_APP_OPENAI_ENDPOINT;
  * レスポンスは通常、`data`プロパティに含まれています。
  */
 export const postToAPI = async (messages) => {
-	console.log("APIキー:", API_KEY);
 	try {
 		const response = await axios.post(
-			URL,
+			process.env.REACT_APP_OPENAI_ENDPOINT,
 			{
 				model: "gpt-4o-mini",
 				messages,
@@ -69,7 +65,7 @@ export const postToAPI = async (messages) => {
 			{
 				headers: {
 					"Content-Type": "application/json",
-					Authorization: `Bearer ${API_KEY}`,
+					Authorization: `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`,
 				},
 			},
 		);
