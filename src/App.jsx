@@ -6,6 +6,7 @@ import { Chat } from "./pages/Chat";
 import { Country } from "./pages/Country";
 import { Home } from "./pages/Home";
 import { Quiz } from "./pages/Quiz";
+import { Dots } from "./pages/Dots";
 
 function App() {
 	return (
@@ -16,6 +17,9 @@ function App() {
 						ホーム
 					</Link>
 					<Link to="/quiz" className="text-2xl">
+						オウム検定（HD）
+					</Link>
+					<Link to="/dots" className="text-2xl">
 						オウム検定
 					</Link>
 					<Link to="/country" className="text-2xl">
@@ -31,6 +35,7 @@ function App() {
 				<Routes>
 					<Route path="/" element={<Home />} />
 					<Route path="/quiz" element={<Quiz />} />
+					<Route path="/dots" element={<Dots />} />
 					<Route path="/country" element={<Country />} />
 					<Route path="/about" element={<About />} />
 					<Route path="/chat" element={<Chat />} />

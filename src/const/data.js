@@ -25,6 +25,15 @@ const imagesCountries = importAll(
 	),
 );
 
+
+const imagesDots = importAll(
+	require.context(
+		"../assets/images/parrot-images/dots/",
+		false,
+		/\.(gif|jpe?g|tiff|png|webp|bmp)$/,
+	),
+);
+
 // 配列をランダムにシャッフルする関数
 const shuffleArray = (array) => {
 	for (let i = array.length - 1; i > 0; i--) {
@@ -49,6 +58,13 @@ const getCorrectImageCountry = (answer) => {
 	});
 };
 
+const getCorrectImageDots = (answer) => {
+	return imagesDots.find((image) => {
+		const imageName = image.name;
+		return imageName?.includes(answer);
+	});
+};
+
 // 正解の画像を含む選択肢を生成する関数
 const generateOptions = (answer) => {
 	const correctImage = getCorrectImage(answer);
@@ -63,6 +79,16 @@ const generateOptions = (answer) => {
 const generateOptionsCountry = (answer) => {
 	const correctImage = getCorrectImageCountry(answer);
 	const otherImages = imagesCountries.filter((image) => {
+		const imageName = image.name;
+		return imageName && !imageName.includes(answer);
+	});
+	const shuffledOtherImages = shuffleArray([...otherImages]).slice(0, 3);
+	return shuffleArray([correctImage, ...shuffledOtherImages]);
+};
+
+const generateOptionsDots = (answer) => {
+	const correctImage = getCorrectImageDots(answer);
+	const otherImages = imagesDots.filter((image) => {
 		const imageName = image.name;
 		return imageName && !imageName.includes(answer);
 	});
@@ -95,6 +121,18 @@ const generateCountriesQuizData = () => {
 	return shuffleArray(quizData); // クイズデータをシャッフル
 };
 
+const generateDotsQuizData = () => {
+	const quizData = imagesDots.map((image) => {
+		const answer = image.name;
+		return {
+			question: `${answer} はどれですか?`,
+			options: generateOptionsDots(answer),
+			answer: answer,
+		};
+	});
+	return shuffleArray(quizData); // クイズデータをシャッフル
+};
+
 const ranks = [
 	{ display: "論外", system: "ロンガイ" },
 	{ display: "素人", system: "シロウト" },
@@ -109,7 +147,9 @@ const ranks = [
 export {
 	generateQuizData,
 	generateCountriesQuizData,
+	generateDotsQuizData,
 	ranks,
 	images,
 	imagesCountries,
+	imagesDots,
 };
