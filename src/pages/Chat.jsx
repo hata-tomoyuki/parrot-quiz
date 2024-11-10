@@ -168,7 +168,7 @@ export const Chat = () => {
 				おうむとおしゃべり
 			</h1>
 			<div className="mt-12 mb-32 w-fit mx-auto relative">
-				<img src={image} alt="" className="mx-auto lg:w-52 lg:h-52" />
+				<img src={image} alt="" className="mx-auto w-36 h-36 lg:w-52 lg:h-52" />
 				<div className="w-80 mt-6 font-bold text-green-900">{responseText}</div>
 			</div>
 			<div className="fixed left-1/2 -translate-x-1/2 bottom-[10rem] lg:bottom-[14rem]">
@@ -178,6 +178,8 @@ export const Chat = () => {
 							type="button"
 							onMouseDown={handleMouseDown}
 							onMouseUp={handleMouseUp}
+							onTouchStart={handleMouseDown}
+							onTouchEnd={handleMouseUp}
 							className={`border-black border-2 rounded-full w-16 h-16 ${isRecording ? "bg-yellow-200" : "bg-white"} ${buttonIsActive ? "" : "opacity-50 cursor-not-allowed"}`}
 							disabled={!buttonIsActive}
 						>
