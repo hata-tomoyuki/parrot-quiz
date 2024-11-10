@@ -44,58 +44,31 @@ export const getImageName = (path) => {
 };
 
 /**
- * 環境変数から取得したAPIキーとエンドポイントを使用して、
- * 指定されたメッセージをOpenAI APIに送信します。
+ * 指定されたエンドポイントにPOSTリクエストを送信し、レスポンスを返します。
  *
- * @param {Array<Object>} messages - APIに送信するメッセージの配列。
- * 各メッセージは、`role`と`content`を含むオブジェクトです。
- * 例: [{ role: "user", content: "こんにちは" }]
- *
- * @returns {Promise<Object>} - APIからのレスポンスを含むPromise。
- * レスポンスは通常、`data`プロパティに含まれています。
+ * @param {string} endpoint - リクエストを送信するAPIのエンドポイントURL。
+ * @param {Object} body - リクエストのボディとして送信するオブジェクト。
+ * @returns {Promise<Object>} - APIからのレスポンスデータを含むPromise。
+ * @throws {Error} - リクエストが失敗した場合、またはHTTPステータスが正常でない場合にエラーをスローします。
  */
-export const postToAPI = async (messages) => {
-	return axios.post(
-		"https://api.openai.com/v1/chat/completions",
-		{
-			model: "gpt-4o-mini",
-			messages,
-		},
-		{
+export const fetchFromAPI = async (endpoint, body) => {
+	try {
+		const response = await fetch(endpoint, {
+			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
-				Authorization: `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`,
 			},
-		},
-	);
-};
+			body: JSON.stringify(body),
+		});
 
-/**
- * テキストを解析し、感情スコアを計算します。
- * @param {string} text - 解析するテキスト。
- * @returns {Promise<Object>} - 感情スコアを含むオブジェクト。
- */
-export const scoring = async (text) => {
-	const parts = text.split(" ");
-	let happy = 0;
-	let anger = 0;
-	let sadness = 0;
-	let joy = 0;
-
-	for (let i = 0; i < parts.length; i += 2) {
-		const keyword = parts[i];
-		const value = Number.parseFloat(parts[i + 1]);
-
-		if (keyword === "喜") {
-			happy = value;
-		} else if (keyword === "怒") {
-			anger = value;
-		} else if (keyword === "哀") {
-			sadness = value;
-		} else if (keyword === "楽") {
-			joy = value;
+		if (!response.ok) {
+			throw new Error(`HTTP error! status: ${response.status}`);
 		}
-	}
 
-	return { happy, anger, sadness, joy };
+		const data = await response.json();
+		return data;
+	} catch (error) {
+		console.error("Error fetching from API:", error);
+		throw error;
+	}
 };

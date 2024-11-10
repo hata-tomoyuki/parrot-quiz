@@ -1,10 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
-import micIconFilled from "../assets/images/icons/mic-filled.svg";
 import micIcon from "../assets/images/icons/mic.svg";
 import stopIcon from "../assets/images/icons/stop.png";
-import { conversationPrompt, emotionPrompt } from "../const/prompt";
 import useTextToSpeech from "../hooks/useTextToSpeech";
-import { postToAPI, scoring } from "../utils/util";
+import { fetchFromAPI } from "../utils/util";
 
 import parrot from "../assets/images/background/parrot.png";
 import angryparrot from "../assets/images/parrot-images/standard/angryparrot.gif";
@@ -93,16 +91,11 @@ export const Chat = () => {
 	 * @param {string} text - ユーザーの入力テキスト。
 	 */
 	const fetchConversationResponse = async (text) => {
-		const messages = [
-			{
-				role: "system",
-				content: conversationPrompt,
-			},
-			{ role: "user", content: text },
-		];
-
-		const gptResponse = await postToAPI(messages);
-		const responseText = gptResponse.data.choices[0].message.content;
+		const data = await fetchFromAPI(
+			`${process.env.REACT_APP_BACKEND_URL}/api/openai-conversation/`,
+			{ text },
+		);
+		const responseText = data.message;
 		handleTextToSpeech(responseText);
 		setResponseText(responseText.replace("Ha？", ""));
 		fetchEmotionResponse(responseText);
@@ -113,24 +106,18 @@ export const Chat = () => {
 	 * @param {string} text - 会話のレスポンステキスト。
 	 */
 	const fetchEmotionResponse = async (text) => {
-		const messages = [
-			{
-				role: "system",
-				content: emotionPrompt,
-			},
-			{ role: "user", content: text },
-		];
-
-		const gptResponse = await postToAPI(messages);
-		const responseText = gptResponse.data.choices[0].message.content;
-		const score = await scoring(responseText);
+		const data = await fetchFromAPI(
+			`${process.env.REACT_APP_BACKEND_URL}/api/openai-emotion/`,
+			{ text },
+		);
+		const score = data.score;
 
 		if (score.joy > 0.5) {
 			setImage(exceptionallyfastparrot);
 		} else if (score.anger > 0.5) {
 			setImage(angryparrot);
 		} else if (score.sadness > 0.5) {
-			setImage(angryparrot);
+			setImage(sadparrot);
 		} else if (score.happy > 0.5) {
 			setImage(bouncingparrot);
 		} else {
