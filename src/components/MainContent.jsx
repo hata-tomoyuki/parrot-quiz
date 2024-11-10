@@ -20,7 +20,7 @@ export const MainContent = ({
 	generateQuizData,
 	openingMessage = "今日は様々なParty Parrotについて学びましょう。",
 	introSoundPlay,
-	introSoundInterval = 5000
+	introSoundInterval = 5000,
 }) => {
 	const [quizData, setQuizData] = useState([]);
 	const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);

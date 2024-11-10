@@ -3,10 +3,10 @@ import "./App.css";
 
 import { About } from "./pages/About";
 import { Chat } from "./pages/Chat";
+import { Classic } from "./pages/Classic";
 import { Country } from "./pages/Country";
 import { Home } from "./pages/Home";
 import { Quiz } from "./pages/Quiz";
-import { Classic } from "./pages/Classic";
 
 function App() {
 	return (

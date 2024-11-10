@@ -1,12 +1,14 @@
-import quadparrot from "../assets/images/parrot-images/standard/quadparrot.gif";
 import congaparrot from "../assets/images/parrot-images/standard/congaparrot.gif";
+import quadparrot from "../assets/images/parrot-images/standard/quadparrot.gif";
 import reversecongaparrot from "../assets/images/parrot-images/standard/reversecongaparrot.gif";
 import { TopLink } from "../components/TopLink";
 
 export const Home = () => {
 	return (
 		<div className="p-8">
-			<h1 className="text-6xl font-bold text-center bg-green-900 text-white w-fit mx-auto px-12 py-6 rounded-xl">目指せ！◯◯◯◯マスター</h1>
+			<h1 className="text-6xl font-bold text-center bg-green-900 text-white w-fit mx-auto px-12 py-6 rounded-xl">
+				目指せ！◯◯◯◯マスター
+			</h1>
 			<div className="mt-12">
 				<div className="flex items-center justify-center mb-8">
 					<img src={quadparrot} alt="quadparrot" className="h-12" />

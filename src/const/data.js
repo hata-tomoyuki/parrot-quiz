@@ -25,7 +25,6 @@ const imagesCountries = importAll(
 	),
 );
 
-
 const imagesClassic = importAll(
 	require.context(
 		"../assets/images/parrot-images/classic/",

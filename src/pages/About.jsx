@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { images, imagesCountries, imagesClassic } from "../const/data";
-
+import { images, imagesClassic, imagesCountries } from "../const/data";
 
 export const About = () => {
 	const [shownImages, setShownImages] = useState(images);
