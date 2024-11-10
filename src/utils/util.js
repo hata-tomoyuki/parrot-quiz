@@ -58,19 +58,26 @@ const URL = process.env.REACT_APP_OPENAI_ENDPOINT;
  * レスポンスは通常、`data`プロパティに含まれています。
  */
 export const postToAPI = async (messages) => {
-	return axios.post(
-		URL,
-		{
-			model: "gpt-4o-mini",
-			messages,
-		},
-		{
-			headers: {
-				"Content-Type": "application/json",
-				Authorization: `Bearer ${API_KEY}`,
+	console.log("APIキー:", API_KEY);
+	try {
+		const response = await axios.post(
+			URL,
+			{
+				model: "gpt-4o-mini",
+				messages,
 			},
-		},
-	);
+			{
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${API_KEY}`,
+				},
+			},
+		);
+		return response.data;
+	} catch (error) {
+		console.error("Error posting to API:", error);
+		throw error;
+	}
 };
 
 /**
