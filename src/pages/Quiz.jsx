@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import parrot from "../assets/images/background/parrot.png";
 import { Gallery } from "../components/Gallery";
 import { MainContent } from "../components/MainContent";
+import { generateQuizData } from "../const/data";
+import useQuizSounds from "../hooks/useQuizSounds";
 
 export const Quiz = () => {
 	const [image, setImage] = useState(parrot);
@@ -9,6 +11,8 @@ export const Quiz = () => {
 	const [parrotsMessage2, setParrotsMessage2] = useState("");
 	const [parrotsMessage3, setParrotsMessage3] = useState("");
 	const [parrotsMessage4, setParrotsMessage4] = useState("");
+	const { introSoundPlay } = useQuizSounds();
+
 	return (
 		<div className="flex flex-col items-center">
 			<MainContent
@@ -17,6 +21,8 @@ export const Quiz = () => {
 				setParrotsMessage2={setParrotsMessage2}
 				setParrotsMessage3={setParrotsMessage3}
 				setParrotsMessage4={setParrotsMessage4}
+				generateQuizData={generateQuizData}
+				introSoundPlay={introSoundPlay}
 			/>
 			<Gallery
 				image={image}

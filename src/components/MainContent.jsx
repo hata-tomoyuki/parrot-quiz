@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { generateQuizData } from "../const/data";
 import { QuizContent } from "./QuizContent";
 
 import wrongGif from "../assets/images/background/60fpsparrot.gif";
@@ -18,6 +17,10 @@ export const MainContent = ({
 	setParrotsMessage2,
 	setParrotsMessage3,
 	setParrotsMessage4,
+	generateQuizData,
+	openingMessage = "今日は様々なParty Parrotについて学びましょう。",
+	introSoundPlay,
+	introSoundInterval = 5000
 }) => {
 	const [quizData, setQuizData] = useState([]);
 	const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -43,7 +46,6 @@ export const MainContent = ({
 		yeahSoundPlay,
 		firstSoundPlay,
 		nextSoundPlay,
-		introSoundPlay,
 		okSoundPlay,
 		finishSoundPlay,
 		timeUpSoundPlay,
@@ -176,7 +178,7 @@ export const MainContent = ({
 	 */
 	const handleStartButtonClick = () => {
 		setGameStarted(true);
-		setFeedbackMessage("今日は様々な Party Parrot について学びましょう。");
+		setFeedbackMessage(openingMessage);
 		introSoundPlay();
 		setTimeout(() => {
 			okSoundPlay();
@@ -198,18 +200,18 @@ export const MainContent = ({
 			setTimeout(() => {
 				setParrotsMessage4("OK");
 			}, 1050);
-		}, 5000);
+		}, introSoundInterval);
 		setTimeout(() => {
 			firstSoundPlay();
 			setParrotsMessage1("");
 			setParrotsMessage2("");
 			setParrotsMessage3("");
 			setParrotsMessage4("");
-		}, 6500);
+		}, introSoundInterval + 1500);
 		setTimeout(() => {
 			setQuestionText(currentQuestion.question);
 			handleTextToSpeech(currentQuestion.question);
-		}, 7500);
+		}, introSoundInterval + 2500);
 	};
 
 	/**
