@@ -20,7 +20,7 @@ function App() {
 
 	return (
 		<BrowserRouter>
-			<div className="App mt-12 lg:mt-0">
+			<div className="App mt-12 md:mt-0">
 				<div
 					className={`sp_menu ${menuOpen && "open"}`}
 					onClick={handleMenuOpen}
@@ -30,7 +30,7 @@ function App() {
 					<span />
 				</div>
 				<header
-					className={`header ${menuOpen && "open"} flex flex-col lg:flex-row fixed inset-0 bg-white w-screen h-screen lg:static lg:w-auto lg:h-auto justify-center gap-12 lg:py-4 z-50`}
+					className={`header ${menuOpen && "open"} flex flex-col md:flex-row fixed inset-0 bg-white w-screen h-screen md:static md:w-auto md:h-auto justify-center gap-12 md:py-4 z-50`}
 				>
 					<Link
 						to="/"

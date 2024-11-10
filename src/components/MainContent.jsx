@@ -83,10 +83,10 @@ export const MainContent = ({
 	}, [isAudioEnded, currentQuestionIndex, quizData.length]);
 
 	useEffect(() => {
-		if (!isHidden) {
+		if (!isHidden && !gameFinished) {
 			countDown();
 		}
-	}, [isHidden]);
+	}, [isHidden, gameFinished]);
 
 	/**
 	 * クイズを終了する関数
@@ -222,6 +222,7 @@ export const MainContent = ({
 		setRank(rank);
 		setFeedbackMessage("時間切れです。");
 		timeUpSoundPlay();
+		setButtonDisabled(true);
 
 		setTimeout(() => {
 			setImage(timeUpGif);
@@ -247,14 +248,14 @@ export const MainContent = ({
 		<div className="relative mt-12">
 			<img src={kokuban} alt="Parrot" />
 			<button
-				className={`absolute top-16 lg:top-40 left-1/2 transform -translate-x-1/2  w-[90%] text-white text-4xl lg:text-6xl font-bold ${gameStarted ? "hidden" : ""}`}
+				className={`absolute top-16 md:top-40 left-1/2 transform -translate-x-1/2  w-[90%] text-white text-4xl md:text-6xl font-bold ${gameStarted ? "hidden" : ""}`}
 				onClick={handleStartButtonClick}
 			>
 				START
 			</button>
-			<div className="absolute top-8 lg:top-10 left-1/2 transform -translate-x-1/2 w-[90%]">
+			<div className="absolute top-8 md:top-10 left-1/2 transform -translate-x-1/2 w-[90%]">
 				{gameFinished ? (
-					<div className="text-white text-3xl lg:text-6xl font-bold leading-relaxed mt-[-5%]">
+					<div className="text-white text-3xl md:text-6xl font-bold leading-10 md:leading-relaxed mt-[-5%]">
 						正解数: {correctCount}
 						<br />
 						<p className={rankIsHidden ? "hidden" : ""}>
@@ -278,10 +279,10 @@ export const MainContent = ({
 					/>
 				)}
 			</div>
-			<div className="absolute lg:bottom-0 right-4 lg:right-[-30%] transform">
-				<img src={teacher} alt="Teacher" className="w-24 lg:w-52 mb-8" />
+			<div className="absolute md:bottom-0 right-4 md:right-[-30%] transform">
+				<img src={teacher} alt="Teacher" className="w-24 md:w-52 mb-8" />
 				{feedbackMessage && (
-					<div className="feedback absolute top-8 lg:top-auto lg:bottom-[-20%] left-[-8rem] lg:left-1/2 transform -translate-x-1/2 font-bold text-lg lg:text-3xl w-60 lg:w-96 text-right lg:text-center">
+					<div className="feedback absolute top-8 md:top-auto md:bottom-[-20%] left-[-8rem] md:left-1/2 transform -translate-x-1/2 font-bold text-lg md:text-3xl w-56 md:w-96 text-right md:text-center">
 						{feedbackMessage}
 					</div>
 				)}

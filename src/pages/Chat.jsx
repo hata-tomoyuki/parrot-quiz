@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import micIconFilled from "../assets/images/icons/mic-filled.svg";
 import micIcon from "../assets/images/icons/mic.svg";
+import stopIcon from "../assets/images/icons/stop.png";
 import { conversationPrompt, emotionPrompt } from "../const/prompt";
 import useTextToSpeech from "../hooks/useTextToSpeech";
 import { postToAPI, scoring } from "../utils/util";
@@ -22,7 +23,6 @@ export const Chat = () => {
 	const [responseText, setResponseText] = useState("");
 	const [isWakeUp, setIsWakeUp] = useState(false);
 	const WALEUPTEXT = "おはよう。私を起こすとか、暇人かよ。";
-	const longPressTimeoutRef = useRef(null);
 	const [message, setMessage] = useState("");
 
 	useEffect(() => {
@@ -69,31 +69,8 @@ export const Chat = () => {
 			setImage(boredparrot);
 			setIsRecording(true);
 			resetTexts();
-		}
-	};
-
-	/**
-	 * 長押しを開始します。
-	 */
-	const handleMouseDown = () => {
-		longPressTimeoutRef.current = setTimeout(() => {
-			startRecognition();
 			setMessage("");
-		}, 500); // 500ms以上押された場合に反応
-	};
-
-	/**
-	 * 長押しを解除します。
-	 */
-	const handleMouseUp = () => {
-		if (longPressTimeoutRef.current) {
-			clearTimeout(longPressTimeoutRef.current);
-			if (!isRecording) {
-				setMessage("長押しするとレコーディング状態になります。");
-				resetTexts();
-			}
 		}
-		stopRecognition();
 	};
 
 	/**
@@ -101,6 +78,7 @@ export const Chat = () => {
 	 */
 	const stopRecognition = () => {
 		if (recognitionRef.current && isRecording) {
+			resetTexts();
 			recognitionRef.current.stop();
 			setImage(parrot);
 			setIsRecording(false);
@@ -164,30 +142,24 @@ export const Chat = () => {
 
 	return (
 		<div className="relative">
-			<h1 className="mt-20 lg:mt-12 font-bold text-4xl lg:text-6xl">
+			<h1 className="mt-20 md:mt-12 font-bold text-4xl md:text-6xl">
 				おうむとおしゃべり
 			</h1>
 			<div className="mt-12 mb-32 w-fit mx-auto relative">
-				<img src={image} alt="" className="mx-auto w-36 h-36 lg:w-52 lg:h-52" />
+				<img src={image} alt="" className="mx-auto w-36 h-36 md:w-52 md:h-52" />
 				<div className="w-80 mt-6 font-bold text-green-900">{responseText}</div>
 			</div>
-			<div className="fixed left-1/2 -translate-x-1/2 bottom-[5rem] lg:bottom-[14rem]">
+			<div className="fixed left-1/2 -translate-x-1/2 bottom-[5rem] md:bottom-[10rem]">
 				{isWakeUp ? (
 					<>
 						<button
 							type="button"
-							onMouseDown={handleMouseDown}
-							onMouseUp={handleMouseUp}
-							onTouchStart={(e) => {
-								e.preventDefault();
-								handleMouseDown();
-							}}
-							onTouchEnd={handleMouseUp}
+							onClick={isRecording ? stopRecognition : startRecognition}
 							className={`border-black border-2 rounded-full w-16 h-16 ${isRecording ? "bg-yellow-200" : "bg-white"} ${buttonIsActive ? "" : "opacity-50 cursor-not-allowed"}`}
 							disabled={!buttonIsActive}
 						>
 							<img
-								src={isRecording ? micIconFilled : micIcon}
+								src={isRecording ? stopIcon : micIcon}
 								alt=""
 								className="w-12 h-12 block mx-auto pointer-events-none"
 							/>

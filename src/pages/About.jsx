@@ -6,13 +6,13 @@ export const About = () => {
 
 	return (
 		<div className="flex flex-col items-center pb-10">
-			<h1 className="text-4xl lg:text-6xl font-bold text-center my-10">
+			<h1 className="text-4xl md:text-6xl font-bold text-center my-10">
 				おうむ図鑑
 			</h1>
 			<ul className="flex justify-center gap-4 mb-10">
 				<li>
 					<button
-						className={`mx-1 px-3 py-1 border rounded text-green-900 text-lg lg:text-2xl ${shownImages === images ? "bg-green-900 text-white" : "bg-white text-green-900"}`}
+						className={`mx-1 px-3 py-1 border rounded text-green-900 text-lg md:text-2xl ${shownImages === images ? "bg-green-900 text-white" : "bg-white text-green-900"}`}
 						onClick={() => {
 							setShownImages(images);
 						}}
@@ -22,7 +22,7 @@ export const About = () => {
 				</li>
 				<li>
 					<button
-						className={`mx-1 px-3 py-1 border rounded text-green-900 text-lg lg:text-2xl ${shownImages === imagesCountries ? "bg-green-900 text-white" : "bg-white text-green-900"}`}
+						className={`mx-1 px-3 py-1 border rounded text-green-900 text-lg md:text-2xl ${shownImages === imagesCountries ? "bg-green-900 text-white" : "bg-white text-green-900"}`}
 						onClick={() => {
 							setShownImages(imagesCountries);
 						}}
@@ -32,7 +32,7 @@ export const About = () => {
 				</li>
 				<li>
 					<button
-						className={`mx-1 px-3 py-1 border rounded text-green-900 text-lg lg:text-2xl ${shownImages === imagesClassic ? "bg-green-900 text-white" : "bg-white text-green-900"}`}
+						className={`mx-1 px-3 py-1 border rounded text-green-900 text-lg md:text-2xl ${shownImages === imagesClassic ? "bg-green-900 text-white" : "bg-white text-green-900"}`}
 						onClick={() => {
 							setShownImages(imagesClassic);
 						}}
@@ -41,7 +41,7 @@ export const About = () => {
 					</button>
 				</li>
 			</ul>
-			<div className="grid grid-cols-2 lg:grid-cols-5 lg:w-4/5 mx-auto lg:gap-8">
+			<div className="grid grid-cols-2 md:grid-cols-5 md:w-4/5 mx-auto md:gap-8">
 				{shownImages.map((image) => (
 					<div
 						key={image.name}
