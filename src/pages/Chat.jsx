@@ -7,9 +7,11 @@ import useTextToSpeech from "../hooks/useTextToSpeech";
 import { postToAPI, scoring } from "../utils/util";
 
 import parrot from "../assets/images/background/parrot.png";
+import angryparrot from "../assets/images/parrot-images/standard/angryparrot.gif";
 import boredparrot from "../assets/images/parrot-images/standard/boredparrot.gif";
 import bouncingparrot from "../assets/images/parrot-images/standard/bouncingparrot.gif";
 import exceptionallyfastparrot from "../assets/images/parrot-images/standard/exceptionallyfastparrot.gif";
+import sadparrot from "../assets/images/parrot-images/standard/sadparrot.gif";
 import sleepingparrot from "../assets/images/parrot-images/standard/sleepingparrot.gif";
 import slowparrot from "../assets/images/parrot-images/standard/slowparrot.gif";
 
@@ -123,8 +125,14 @@ export const Chat = () => {
 		const responseText = gptResponse.data.choices[0].message.content;
 		const score = await scoring(responseText);
 
-		if (score.happy > 0) {
+		if (score.joy > 0.5) {
 			setImage(exceptionallyfastparrot);
+		} else if (score.anger > 0.5) {
+			setImage(angryparrot);
+		} else if (score.sadness > 0.5) {
+			setImage(angryparrot);
+		} else if (score.happy > 0.5) {
+			setImage(bouncingparrot);
 		} else {
 			setImage(slowparrot);
 		}
