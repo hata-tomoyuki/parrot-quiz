@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { images, imagesCountries } from "../const/data";
+import { images, imagesCountries, imagesDots } from "../const/data";
 
 
 export const About = () => {
@@ -16,7 +16,7 @@ export const About = () => {
 							setShownImages(images);
 						}}
 					>
-						Normal
+						HD
 					</button>
 				</li>
 				<li>
@@ -27,6 +27,16 @@ export const About = () => {
 						}}
 					>
 						Countries
+					</button>
+				</li>
+				<li>
+					<button
+						className={`mx-1 px-3 py-1 border rounded text-green-900 text-2xl ${shownImages === imagesDots ? "bg-green-900 text-white" : "bg-white text-green-900"}`}
+						onClick={() => {
+							setShownImages(imagesDots);
+						}}
+					>
+						Normal
 					</button>
 				</li>
 			</ul>
