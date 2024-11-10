@@ -55,25 +55,19 @@ export const getImageName = (path) => {
  * レスポンスは通常、`data`プロパティに含まれています。
  */
 export const postToAPI = async (messages) => {
-	try {
-		const response = await axios.post(
-			process.env.REACT_APP_OPENAI_ENDPOINT,
-			{
-				model: "gpt-4o-mini",
-				messages,
+	return axios.post(
+		"https://api.openai.com/v1/chat/completions",
+		{
+			model: "gpt-4o-mini",
+			messages,
+		},
+		{
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`,
 			},
-			{
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`,
-				},
-			},
-		);
-		return response.data;
-	} catch (error) {
-		console.error("Error posting to API:", error);
-		throw error;
-	}
+		},
+	);
 };
 
 /**
