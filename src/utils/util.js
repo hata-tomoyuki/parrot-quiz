@@ -72,3 +72,33 @@ export const postToAPI = async (messages) => {
 		},
 	);
 };
+
+/**
+ * テキストを解析し、感情スコアを計算します。
+ * @param {string} text - 解析するテキスト。
+ * @returns {Promise<Object>} - 感情スコアを含むオブジェクト。
+ */
+export const scoring = async (text) => {
+	const parts = text.split(" ");
+	let happy = 0;
+	let anger = 0;
+	let sadness = 0;
+	let joy = 0;
+
+	for (let i = 0; i < parts.length; i += 2) {
+		const keyword = parts[i];
+		const value = Number.parseFloat(parts[i + 1]);
+
+		if (keyword === "喜") {
+			happy = value;
+		} else if (keyword === "怒") {
+			anger = value;
+		} else if (keyword === "哀") {
+			sadness = value;
+		} else if (keyword === "楽") {
+			joy = value;
+		}
+	}
+
+	return { happy, anger, sadness, joy };
+};
