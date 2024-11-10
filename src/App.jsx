@@ -6,36 +6,36 @@ import { Chat } from "./pages/Chat";
 import { Country } from "./pages/Country";
 import { Home } from "./pages/Home";
 import { Quiz } from "./pages/Quiz";
-import { Dots } from "./pages/Dots";
+import { Classic } from "./pages/Classic";
 
 function App() {
 	return (
 		<BrowserRouter>
 			<div className="App">
 				<header className="flex justify-center gap-12 py-4">
-					<Link to="/" className="text-2xl">
+					<Link to="/" className="text-xl hover:text-green-900">
 						ホーム
 					</Link>
-					<Link to="/quiz" className="text-2xl">
-						オウム検定（HD）
+					<Link to="/quiz" className="text-xl hover:text-green-900">
+						おうむ検定
 					</Link>
-					<Link to="/dots" className="text-2xl">
-						オウム検定
+					<Link to="/classic" className="text-xl hover:text-green-900">
+						おうむ検定（クラシック編）
 					</Link>
-					<Link to="/country" className="text-2xl">
-						国旗クイズ
+					<Link to="/country" className="text-xl hover:text-green-900">
+						おうむ検定（国旗編）
 					</Link>
-					<Link to="/about" className="text-2xl">
-						オウム図鑑
+					<Link to="/about" className="text-xl hover:text-green-900">
+						おうむ図鑑
 					</Link>
-					<Link to="/chat" className="text-2xl">
-						チャット
+					<Link to="/chat" className="text-xl hover:text-green-900">
+						おうむとおしゃべり
 					</Link>
 				</header>
 				<Routes>
 					<Route path="/" element={<Home />} />
 					<Route path="/quiz" element={<Quiz />} />
-					<Route path="/dots" element={<Dots />} />
+					<Route path="/classic" element={<Classic />} />
 					<Route path="/country" element={<Country />} />
 					<Route path="/about" element={<About />} />
 					<Route path="/chat" element={<Chat />} />

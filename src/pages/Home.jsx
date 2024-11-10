@@ -1,28 +1,55 @@
 import quadparrot from "../assets/images/parrot-images/standard/quadparrot.gif";
+import congaparrot from "../assets/images/parrot-images/standard/congaparrot.gif";
+import reversecongaparrot from "../assets/images/parrot-images/standard/reversecongaparrot.gif";
 import { TopLink } from "../components/TopLink";
 
 export const Home = () => {
 	return (
 		<div className="p-8">
-			<h1 className="text-6xl font-bold text-center">目指せ！◯◯◯◯マスター</h1>
-			<ul className="flex flex-col items-center gap-8 mt-16">
-				<TopLink
-					to="/quiz"
-					title="オウム検定"
-					description="オウム検定に挑戦できます。"
-				/>
-				<TopLink
-					to="/country"
-					title="国旗クイズ"
-					description="世界の国旗について学べます。"
-				/>
-				<TopLink
-					to="/about"
-					title="オウム図鑑"
-					description="オウムの種類を確認できます。"
-				/>
-			</ul>
-			<img src={quadparrot} alt="quadparrot" className="w-64 mx-auto" />
+			<h1 className="text-6xl font-bold text-center bg-green-900 text-white w-fit mx-auto px-12 py-6 rounded-xl">目指せ！◯◯◯◯マスター</h1>
+			<div className="mt-12">
+				<div className="flex items-center justify-center mb-8">
+					<img src={quadparrot} alt="quadparrot" className="h-12" />
+					<h2 className="text-5xl font-bold">おうむ検定</h2>
+					<img src={quadparrot} alt="quadparrot" className="h-12" />
+				</div>
+				<ul className="flex items-center justify-center gap-8">
+					<TopLink
+						to="/quiz"
+						title="おうむ検定"
+						description="おうむ検定に挑戦できます。"
+					/>
+					<TopLink
+						to="/classic"
+						title="おうむ検定（クラシック編）"
+						description="クラシックおうむ検定に挑戦できます。"
+					/>
+					<TopLink
+						to="/country"
+						title="おうむ検定（国旗編）"
+						description="国旗おうむ検定に挑戦できます。"
+					/>
+				</ul>
+			</div>
+			<div className="mt-12">
+				<div className="flex items-center justify-center mb-8">
+					<img src={reversecongaparrot} alt="quadparrot" className="h-12" />
+					<h2 className="text-5xl font-bold">その他</h2>
+					<img src={congaparrot} alt="quadparrot" className="h-12" />
+				</div>
+				<ul className="flex justify-center items-center gap-8">
+					<TopLink
+						to="/about"
+						title="おうむ図鑑"
+						description="おうむの種類を確認できます。"
+					/>
+					<TopLink
+						to="/chat"
+						title="おうむとおしゃべり"
+						description="おうむとおしゃべりできます。"
+					/>
+				</ul>
+			</div>
 		</div>
 	);
 };

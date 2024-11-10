@@ -26,9 +26,9 @@ const imagesCountries = importAll(
 );
 
 
-const imagesDots = importAll(
+const imagesClassic = importAll(
 	require.context(
-		"../assets/images/parrot-images/dots/",
+		"../assets/images/parrot-images/classic/",
 		false,
 		/\.(gif|jpe?g|tiff|png|webp|bmp)$/,
 	),
@@ -58,8 +58,8 @@ const getCorrectImageCountry = (answer) => {
 	});
 };
 
-const getCorrectImageDots = (answer) => {
-	return imagesDots.find((image) => {
+const getCorrectImageClassic = (answer) => {
+	return imagesClassic.find((image) => {
 		const imageName = image.name;
 		return imageName?.includes(answer);
 	});
@@ -86,9 +86,9 @@ const generateOptionsCountry = (answer) => {
 	return shuffleArray([correctImage, ...shuffledOtherImages]);
 };
 
-const generateOptionsDots = (answer) => {
-	const correctImage = getCorrectImageDots(answer);
-	const otherImages = imagesDots.filter((image) => {
+const generateOptionsClassic = (answer) => {
+	const correctImage = getCorrectImageClassic(answer);
+	const otherImages = imagesClassic.filter((image) => {
 		const imageName = image.name;
 		return imageName && !imageName.includes(answer);
 	});
@@ -121,12 +121,12 @@ const generateCountriesQuizData = () => {
 	return shuffleArray(quizData); // クイズデータをシャッフル
 };
 
-const generateDotsQuizData = () => {
-	const quizData = imagesDots.map((image) => {
+const generateClassicQuizData = () => {
+	const quizData = imagesClassic.map((image) => {
 		const answer = image.name;
 		return {
 			question: `${answer} はどれですか?`,
-			options: generateOptionsDots(answer),
+			options: generateOptionsClassic(answer),
 			answer: answer,
 		};
 	});
@@ -136,20 +136,20 @@ const generateDotsQuizData = () => {
 const ranks = [
 	{ display: "論外", system: "ロンガイ" },
 	{ display: "素人", system: "シロウト" },
-	{ display: "おうむ検定４級", system: "オウムケンテイヨンキュウ" },
-	{ display: "おうむ検定３級", system: "オウムケンテイサンキュウ" },
-	{ display: "おうむ検定２級", system: "オウムケンテイニキュウ" },
-	{ display: "おうむ検定準１級", system: "オウムケンテイジュンイッキュウ" },
-	{ display: "おうむ検定１級", system: "オウムケンテイイッキュウ" },
-	{ display: "おうむマスター", system: "オウムマスター" },
+	{ display: "おうむ検定４級", system: "おうむケンテイヨンキュウ" },
+	{ display: "おうむ検定３級", system: "おうむケンテイサンキュウ" },
+	{ display: "おうむ検定２級", system: "おうむケンテイニキュウ" },
+	{ display: "おうむ検定準１級", system: "おうむケンテイジュンイッキュウ" },
+	{ display: "おうむ検定１級", system: "おうむケンテイイッキュウ" },
+	{ display: "おうむマスター", system: "おうむマスター" },
 ];
 
 export {
 	generateQuizData,
 	generateCountriesQuizData,
-	generateDotsQuizData,
+	generateClassicQuizData,
 	ranks,
 	images,
 	imagesCountries,
-	imagesDots,
+	imagesClassic,
 };

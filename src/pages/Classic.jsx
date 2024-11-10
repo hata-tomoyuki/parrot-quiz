@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import parrot from "../assets/images/background/parrot.png";
-import { Gallery } from "../components/Gallery";
-import { MainContentDots } from "../components/MainContentDots.jsx";
+import { Gallery } from "../components/Gallery.jsx";
+import { MainContentClassic } from "../components/MainContentClassic.jsx";
 
-export const Dots = () => {
+export const Classic = () => {
 	const [image, setImage] = useState(parrot);
 	const [parrotsMessage1, setParrotsMessage1] = useState("");
 	const [parrotsMessage2, setParrotsMessage2] = useState("");
@@ -11,7 +11,7 @@ export const Dots = () => {
 	const [parrotsMessage4, setParrotsMessage4] = useState("");
 	return (
 		<div className="flex flex-col items-center">
-			<MainContentDots
+			<MainContentClassic
 				setImage={setImage}
 				setParrotsMessage1={setParrotsMessage1}
 				setParrotsMessage2={setParrotsMessage2}

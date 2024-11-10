@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { generateDotsQuizData } from "../const/data";
+import { generateClassicQuizData } from "../const/data";
 import { QuizContent } from "./QuizContent";
 
 import wrongGif from "../assets/images/background/60fpsparrot.gif";
@@ -12,7 +12,7 @@ import useQuizSounds from "../hooks/useQuizSounds";
 import useRank from "../hooks/useRank";
 import useTextToSpeech from "../hooks/useTextToSpeech";
 
-export const MainContentDots = ({
+export const MainContentClassic = ({
     setImage,
     setParrotsMessage1,
     setParrotsMessage2,
@@ -69,7 +69,7 @@ export const MainContentDots = ({
     };
 
     useEffect(() => {
-        setQuizData(generateDotsQuizData());
+        setQuizData(generateClassicQuizData());
     }, []);
 
     const currentQuestion = quizData[currentQuestionIndex];

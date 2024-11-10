@@ -21,7 +21,7 @@ export const Chat = () => {
     const [buttonIsActive, setButtonIsActive] = useState(false);
     const [responseText, setResponseText] = useState("");
     const [isWakeUp, setIsWakeUp] = useState(false);
-    const WALEUPTEXT = "おはよう。私を起こすなんて、どんだけ暇人なんだよ。";
+    const WALEUPTEXT = "おはよう。私を起こすとか、暇人かよ。";
     const longPressTimeoutRef = useRef(null);
     const [message, setMessage] = useState("");
 
@@ -49,6 +49,9 @@ export const Chat = () => {
         if (isAudioEnded) {
             setImage(parrot);
             setButtonIsActive(true);
+            setTimeout(() => {
+                resetTexts();
+            }, 1000);
         }
     }, [isAudioEnded]);
 
@@ -160,41 +163,43 @@ export const Chat = () => {
     };
 
     return (
-        <div>
-            <h1 className="mt-12 font-bold text-3xl">オウムとおしゃべり</h1>
+        <div className="relative">
+            <h1 className="mt-12 font-bold text-3xl">おうむとおしゃべり</h1>
             <div className="mt-12 mb-32 w-fit mx-auto relative">
-                <img src={image} alt="" className="mx-auto w-32 h-32" />
-                <div className="w-80 absolute bottom-[-6rem] left-1/2 -translate-x-1/2 text-left font-bold text-green-900">
+                <img src={image} alt="" className="mx-auto w-52 h-52" />
+                <div className="w-80 mt-6 font-bold text-green-900">
                     {responseText}
                 </div>
             </div>
-            {isWakeUp ? (
-                <>
+            <div className="fixed left-1/2 -translate-x-1/2 bottom-[14rem]">
+                {isWakeUp ? (
+                    <>
+                        <button
+                            type="button"
+                            onMouseDown={handleMouseDown}
+                            onMouseUp={handleMouseUp}
+                            className={`border-black border-2 rounded-full w-16 h-16 ${isRecording ? "bg-yellow-200" : "bg-white"} ${buttonIsActive ? "" : "opacity-50 cursor-not-allowed"}`}
+                            disabled={!buttonIsActive}
+                        >
+                            <img
+                                src={isRecording ? micIconFilled : micIcon}
+                                alt=""
+                                className="w-12 h-12 block mx-auto"
+                            />
+                        </button>
+                    </>
+                ) : (
                     <button
                         type="button"
-                        onMouseDown={handleMouseDown}
-                        onMouseUp={handleMouseUp}
-                        className={`border-black border-2 rounded-full w-16 h-16 ${isRecording ? "bg-yellow-200" : "bg-white"} ${buttonIsActive ? "" : "opacity-50 cursor-not-allowed"}`}
-                        disabled={!buttonIsActive}
+                        onClick={parrotWakeUp}
+                        className="border-black border-2 w-32 h-12 bg-white"
                     >
-                        <img
-                            src={isRecording ? micIconFilled : micIcon}
-                            alt=""
-                            className="w-12 h-12 block mx-auto"
-                        />
+                        起こす
                     </button>
-                    <div className="output mt-6" ref={outputRef} />
-                </>
-            ) : (
-                <button
-                    type="button"
-                    onClick={parrotWakeUp}
-                    className="border-black border-2 w-32 h-12 bg-white"
-                >
-                    起こす
-                </button>
-            )}
-            {message && <div className="text-red-500 mt-4">{message}</div>}
+                )}
+                <div className="output mt-6 absolute w-96 left-1/2 -translate-x-1/2" ref={outputRef} />
+                {message && <div className="text-red-500 mt-4">{message}</div>}
+            </div>
         </div>
     );
 };

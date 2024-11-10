@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { images, imagesCountries, imagesDots } from "../const/data";
+import { images, imagesCountries, imagesClassic } from "../const/data";
 
 
 export const About = () => {
@@ -7,7 +7,7 @@ export const About = () => {
 
 	return (
 		<div className="flex flex-col items-center pb-10">
-			<h1 className="text-6xl font-bold text-center my-10">オウム図鑑</h1>
+			<h1 className="text-6xl font-bold text-center my-10">おうむ図鑑</h1>
 			<ul className="flex justify-center gap-4 mb-10">
 				<li>
 					<button
@@ -16,7 +16,7 @@ export const About = () => {
 							setShownImages(images);
 						}}
 					>
-						HD
+						Normal
 					</button>
 				</li>
 				<li>
@@ -31,12 +31,12 @@ export const About = () => {
 				</li>
 				<li>
 					<button
-						className={`mx-1 px-3 py-1 border rounded text-green-900 text-2xl ${shownImages === imagesDots ? "bg-green-900 text-white" : "bg-white text-green-900"}`}
+						className={`mx-1 px-3 py-1 border rounded text-green-900 text-2xl ${shownImages === imagesClassic ? "bg-green-900 text-white" : "bg-white text-green-900"}`}
 						onClick={() => {
-							setShownImages(imagesDots);
+							setShownImages(imagesClassic);
 						}}
 					>
-						Normal
+						Classic
 					</button>
 				</li>
 			</ul>
