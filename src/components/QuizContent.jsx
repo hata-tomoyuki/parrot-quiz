@@ -14,11 +14,11 @@ export const QuizContent = ({
 	return (
 		<div className="quiz text-center">
 			<span
-				className={`text-white text-3xl font-bold mb-4 ${isHidden ? "hidden" : ""}`}
+				className={`text-white text-xl lg:text-3xl font-bold mb-4 ${isHidden ? "hidden" : ""}`}
 			>
 				{timer}
 			</span>
-			<h2 className="text-3xl font-bold mb-4 text-white">{questionText}</h2>
+			<h2 className="lg:text-3xl font-bold mb-4 text-white">{questionText}</h2>
 			<div className={`options ${isHidden ? "hidden" : ""}`}>
 				{currentQuestion.options.map((option, index) => {
 					return (
@@ -26,7 +26,7 @@ export const QuizContent = ({
 							key={index}
 							onClick={() => handleOptionClick(option)}
 							disabled={selectedOption !== null}
-							className={`w-36 h-36 bg-gray-200 mx-2 border-2 border-gray-400 rounded-md hover:bg-red-300 ${option === selectedOption ? "selected" : ""} ${buttonDisabled ? "disabled" : ""}`}
+							className={`w-16 h-16 lg:w-36 lg:h-36 bg-gray-200 mx-2 border-2 border-gray-400 rounded-md hover:bg-red-300 ${option === selectedOption ? "selected" : ""} ${buttonDisabled ? "disabled" : ""}`}
 						>
 							<img
 								src={option.default}

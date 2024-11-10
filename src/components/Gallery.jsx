@@ -9,7 +9,7 @@ export const Gallery = ({
 	parrotsMessage4,
 }) => {
 	return (
-		<div className="flex flex-col justify-between items-center w-full max-w-screen-md mt-[-4%]">
+		<div className="flex flex-col justify-between items-center w-full max-w-screen-md mt-32 lg:mt-[-4%]">
 			<div className="flex items-center justify-between w-[80%]">
 				<ParrotImage image={image} message={parrotsMessage1} />
 				<ParrotImage image={image} message={parrotsMessage2} isFlipped />

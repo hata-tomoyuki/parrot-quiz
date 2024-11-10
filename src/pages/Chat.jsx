@@ -164,12 +164,14 @@ export const Chat = () => {
 
 	return (
 		<div className="relative">
-			<h1 className="mt-12 font-bold text-3xl">おうむとおしゃべり</h1>
+			<h1 className="mt-20 lg:mt-12 font-bold text-4xl lg:text-6xl">
+				おうむとおしゃべり
+			</h1>
 			<div className="mt-12 mb-32 w-fit mx-auto relative">
-				<img src={image} alt="" className="mx-auto w-52 h-52" />
+				<img src={image} alt="" className="mx-auto lg:w-52 lg:h-52" />
 				<div className="w-80 mt-6 font-bold text-green-900">{responseText}</div>
 			</div>
-			<div className="fixed left-1/2 -translate-x-1/2 bottom-[14rem]">
+			<div className="fixed left-1/2 -translate-x-1/2 bottom-[10rem] lg:bottom-[14rem]">
 				{isWakeUp ? (
 					<>
 						<button

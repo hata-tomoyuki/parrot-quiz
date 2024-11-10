@@ -6,16 +6,16 @@ import { TopLink } from "../components/TopLink";
 export const Home = () => {
 	return (
 		<div className="p-8">
-			<h1 className="text-6xl font-bold text-center bg-green-900 text-white w-fit mx-auto px-12 py-6 rounded-xl">
+			<h1 className="text-2xl lg:text-6xl font-bold text-center bg-green-900 text-white lgw-fit mx-auto lg:px-12 py-6 rounded-xl">
 				目指せ！◯◯◯◯マスター
 			</h1>
 			<div className="mt-12">
 				<div className="flex items-center justify-center mb-8">
 					<img src={quadparrot} alt="quadparrot" className="h-12" />
-					<h2 className="text-5xl font-bold">おうむ検定</h2>
+					<h2 className="text-2xl lg:text-5xl font-bold">おうむ検定</h2>
 					<img src={quadparrot} alt="quadparrot" className="h-12" />
 				</div>
-				<ul className="flex items-center justify-center gap-8">
+				<ul className="flex flex-wrap items-center justify-center gap-8">
 					<TopLink
 						to="/quiz"
 						title="おうむ検定"
@@ -36,10 +36,10 @@ export const Home = () => {
 			<div className="mt-12">
 				<div className="flex items-center justify-center mb-8">
 					<img src={reversecongaparrot} alt="quadparrot" className="h-12" />
-					<h2 className="text-5xl font-bold">その他</h2>
+					<h2 className="text-2xl lg:text-5xl font-bold">その他</h2>
 					<img src={congaparrot} alt="quadparrot" className="h-12" />
 				</div>
-				<ul className="flex justify-center items-center gap-8">
+				<ul className="flex flex-wrap justify-center items-center gap-8">
 					<TopLink
 						to="/about"
 						title="おうむ図鑑"
